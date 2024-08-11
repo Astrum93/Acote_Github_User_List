@@ -1,3 +1,5 @@
+import 'package:acote_github_user_list_app/screen/home/widget/ad_banner_widget.dart';
+import 'package:acote_github_user_list_app/screen/home/widget/user_profile_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -27,54 +29,9 @@ class HomeScreen extends StatelessWidget {
             ),
             itemBuilder: (context, index) {
               if ((index + 1) % 10 == 0) {
-                return Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 100,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(
-                        'https://placehold.it/500x100?text=ad',
-                      ),
-                    ),
-                  ),
-                );
+                return const AdBanner();
               }
-              return Container(
-                padding: const EdgeInsets.all(8),
-                width: MediaQuery.of(context).size.width,
-                height: 100,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    /// 프로필 사진
-                    CircleAvatar(
-                      radius: 50,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Image.network(
-                          'https://placehold.it/500x100?text=ad',
-                          fit: BoxFit.fill,
-                          alignment: Alignment.center,
-                        ),
-                      ),
-                    ),
-                    const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          'userName',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text('user intro@@@@@@@@@'),
-                      ],
-                    )
-                  ],
-                ),
-              );
+              return const UserProfile();
             },
           ),
         ),
