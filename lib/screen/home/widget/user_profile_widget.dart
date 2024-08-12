@@ -38,9 +38,6 @@ class UserProfile extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-
-              /// 유저 소개
-              Text('user intro@@@@@@@@@'),
             ],
           )
         ],
