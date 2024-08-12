@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
 class UserProfile extends StatelessWidget {
+  final String userId;
+  final String userAvatarUrl;
+
   const UserProfile({
     super.key,
+    required this.userId,
+    required this.userAvatarUrl,
   });
 
   @override
@@ -20,20 +25,20 @@ class UserProfile extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(50),
               child: Image.network(
-                'https://placehold.it/500x100?text=ad',
+                userAvatarUrl,
                 fit: BoxFit.fill,
                 alignment: Alignment.center,
               ),
             ),
           ),
-          const Column(
+          Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               /// 유저 ID
               Text(
-                'userName',
-                style: TextStyle(
+                userId,
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
