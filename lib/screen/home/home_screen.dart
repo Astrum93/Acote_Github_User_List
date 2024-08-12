@@ -1,5 +1,6 @@
 import 'package:acote_github_user_list_app/screen/home/widget/ad_banner_widget.dart';
 import 'package:acote_github_user_list_app/screen/home/widget/user_profile_widget.dart';
+import 'package:acote_github_user_list_app/service/github_api/github_api_service.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -31,7 +32,12 @@ class HomeScreen extends StatelessWidget {
               if ((index + 1) % 10 == 0) {
                 return const AdBanner();
               }
-              return const UserProfile();
+              return GestureDetector(
+                onTap: () {
+                  GithubApiService.getUserInfos();
+                },
+                child: const UserProfile(),
+              );
             },
           ),
         ),
