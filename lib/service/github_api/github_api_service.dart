@@ -6,13 +6,7 @@ class GithubApiService {
   static Future getUserInfos() async {
     final dio = Dio();
     try {
-      final response = await dio.get(
-        'https://api.github.com/users',
-      );
-      //debugPrint(response.headers.toString());
-      debugPrint(response.data.toString());
-      // debugPrint(response.data[0]['login'].toString());
-      // debugPrint(response.data[0]['avatar_url'].toString());
+      final response = await dio.get('https://api.github.com/users');
       return response;
     } on DioException catch (e) {
       if (e.type == DioExceptionType.badResponse) {
