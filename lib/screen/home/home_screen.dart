@@ -1,10 +1,23 @@
+import 'package:acote_github_user_list_app/screen/home/data/user_data.dart';
 import 'package:acote_github_user_list_app/screen/home/widget/ad_banner_widget.dart';
 import 'package:acote_github_user_list_app/screen/home/widget/user_profile_widget.dart';
-import 'package:acote_github_user_list_app/service/github_api/github_api_service.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> with UserDataProvider {
+  @override
+  void initState() {
+    super.initState();
+    Get.put(UserData());
+    userData.getUserInfosData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,21 +35,32 @@ class HomeScreen extends StatelessWidget {
             backgroundColor: Colors.transparent,
             centerTitle: true,
           ),
-          body: ListView.separated(
-            itemCount: 60,
-            separatorBuilder: (context, index) => const Divider(
-              color: Colors.grey,
-              height: 0.1,
-            ),
-            itemBuilder: (context, index) {
-              if ((index + 1) % 10 == 0) {
-                return const AdBanner();
+          body: Obx(
+            () {
+              if (userData.userInfos.isEmpty) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
               }
-              return GestureDetector(
-                onTap: () {
-                  GithubApiService.getUserInfos();
+
+              return ListView.separated(
+                itemCount: userData.userInfos.length,
+                separatorBuilder: (context, index) => const Divider(
+                  color: Colors.grey,
+                  height: 0.1,
+                ),
+                itemBuilder: (context, index) {
+                  if ((index + 1) % 10 == 0) {
+                    return const AdBanner();
+                  }
+                  final String userId = userData.userInfos[index]['userId'];
+                  final String userAvatarUrl =
+                      userData.userInfos[index]['userAvatarUrl'];
+                  return UserProfile(
+                    userId: userId,
+                    userAvatarUrl: userAvatarUrl,
+                  );
                 },
-                child: const UserProfile(),
               );
             },
           ),
