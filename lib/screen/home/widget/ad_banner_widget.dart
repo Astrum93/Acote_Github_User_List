@@ -25,6 +25,7 @@ class _AdBannerState extends State<AdBanner> {
             image: NetworkImage(
               'https://placehold.it/500x100?text=ad',
             ),
+            fit: BoxFit.fitHeight,
           ),
         ),
       ),
