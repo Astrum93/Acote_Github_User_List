@@ -13,22 +13,6 @@ class GithubApiService {
         queryParameters: {'since': since},
       );
 
-      debugPrint(response.headers['link']?[0]);
-      debugPrint(response.headers['link']?.toString());
-
-      if (response.headers['link']![0].contains('rel="prev"')) {
-        debugPrint('prev 페이지가 있습니다.');
-      }
-      if (response.headers['link']![0].contains('rel="next"')) {
-        debugPrint('next 페이지가 있습니다.');
-      }
-      if (response.headers['link']![0].contains('rel="last"')) {
-        debugPrint('last 페이지가 있습니다.');
-      }
-      if (response.headers['link']![0].contains('rel="first"')) {
-        debugPrint('first 페이지가 있습니다.');
-      }
-
       return response;
     } on DioException catch (e) {
       if (e.type == DioExceptionType.badResponse) {
