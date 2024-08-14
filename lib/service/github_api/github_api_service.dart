@@ -3,17 +3,19 @@ import 'package:flutter/material.dart';
 
 class GithubApiService {
   /// 유저 정보를 불러 오는 메서드
-  static Future getUserInfos() async {
+  static Future getUserInfos(since) async {
     final dio = Dio();
+
     try {
+      String url = 'https://api.github.com/users';
       final response = await dio.get(
-        'https://api.github.com/users',
-        queryParameters: {
-          'since': 900,
-        },
+        url,
+        queryParameters: {'since': since},
       );
-      debugPrint(response.headers['link'].toString());
+
       debugPrint(response.headers['link']?[0]);
+      debugPrint(response.headers['link']?.toString());
+
       if (response.headers['link']![0].contains('rel="prev"')) {
         debugPrint('prev 페이지가 있습니다.');
       }
