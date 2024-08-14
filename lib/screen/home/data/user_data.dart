@@ -1,4 +1,5 @@
 import 'package:acote_github_user_list_app/service/github_api/github_api_service.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 abstract mixin class UserDataProvider {
@@ -6,10 +7,40 @@ abstract mixin class UserDataProvider {
 }
 
 class UserData extends GetxController with UserDataProvider {
+  final ScrollController scrollController = ScrollController();
+  RxString since = ''.obs;
   RxList userInfos = [].obs;
 
+  @override
+  void onInit() {
+    super.onInit();
+    _load();
+  }
+
+  void _load() {
+    scrollController.addListener(
+      () {
+        if (scrollController.position.pixels ==
+            scrollController.position.maxScrollExtent) {
+          getUserInfosData();
+        }
+      },
+    );
+  }
+
   Future getUserInfosData() async {
-    final response = await GithubApiService.getUserInfos();
+    /// response 생성
+    final response = await GithubApiService.getUserInfos(since);
+
+    /// header ['link'] 정의
+    var linkHeader = response.headers['Link']?[0].toString();
+
+    /// 조건부로 since 값 정의
+    if (linkHeader != null && linkHeader.contains('rel="next"')) {
+      RegExp regExp = RegExp(r'since=(\d+)');
+      Match? match = regExp.firstMatch(linkHeader);
+      since.value = match!.group(1)!;
+    }
 
     /// Response -> List
     List data = response.data;
