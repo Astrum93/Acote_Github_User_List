@@ -37,6 +37,7 @@ class UserData extends GetxController with UserDataProvider {
 
     /// 조건부로 since 값 정의
     if (linkHeader != null && linkHeader.contains('rel="next"')) {
+      /// 정규식 사용 'since=' 이후에 나오는 1개이상의 숫자.
       RegExp regExp = RegExp(r'since=(\d+)');
       Match? match = regExp.firstMatch(linkHeader);
       since.value = match!.group(1)!;
