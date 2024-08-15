@@ -42,6 +42,7 @@ class _DetailScreenState extends State<DetailScreen> with UserDataProvider {
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              /// Repo 소유자 Name
               Text(
                 widget.userName,
                 style: const TextStyle(
@@ -91,11 +92,14 @@ class _DetailScreenState extends State<DetailScreen> with UserDataProvider {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            /// Repo Name
                             Text(
                               name,
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 20),
                             ),
+
+                            /// Repo Description
                             description.isEmpty
                                 ? const SizedBox()
                                 : Text(
@@ -106,6 +110,7 @@ class _DetailScreenState extends State<DetailScreen> with UserDataProvider {
                             const SizedBox(height: 20),
                             Row(
                               children: [
+                                /// Repo StargazersCount
                                 const Icon(
                                   Icons.star_rounded,
                                   color: Colors.amber,
@@ -119,6 +124,8 @@ class _DetailScreenState extends State<DetailScreen> with UserDataProvider {
                                   ),
                                 ),
                                 const SizedBox(width: 10),
+
+                                /// Repo Used Language
                                 language.isEmpty
                                     ? const SizedBox()
                                     : const Icon(
