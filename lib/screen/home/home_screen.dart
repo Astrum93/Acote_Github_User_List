@@ -22,6 +22,12 @@ class _HomeScreenState extends State<HomeScreen> with UserDataProvider {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    Get.delete<UserData>();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: SafeArea(
