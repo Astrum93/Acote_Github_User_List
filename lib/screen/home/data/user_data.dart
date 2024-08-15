@@ -50,9 +50,11 @@ class UserData extends GetxController with UserDataProvider {
     for (var item in data) {
       final String userId = item['login'];
       final String userAvatarUrl = item['avatar_url'];
+      final String reposUrl = item['repos_url'];
       Map<String, dynamic> userInfo = {
         'userId': userId,
         'userAvatarUrl': userAvatarUrl,
+        'reposUrl': reposUrl,
       };
 
       /// RxList에 추가
