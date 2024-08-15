@@ -1,4 +1,6 @@
+import 'package:acote_github_user_list_app/screen/home/data/user_data.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DetailScreen extends StatefulWidget {
   final String userRepoUrl;
@@ -14,12 +16,20 @@ class DetailScreen extends StatefulWidget {
   State<DetailScreen> createState() => _DetailScreenState();
 }
 
-class _DetailScreenState extends State<DetailScreen> {
+class _DetailScreenState extends State<DetailScreen> with UserDataProvider {
   _DetailScreenState();
 
   @override
   void initState() {
     super.initState();
+    Get.put(UserData());
+    userData.getUserReposData(widget.userRepoUrl);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    Get.delete<UserData>();
   }
 
   @override
@@ -48,64 +58,97 @@ class _DetailScreenState extends State<DetailScreen> {
             ],
           ),
         ),
-        body: ListView.separated(
-          itemCount: 30,
-          separatorBuilder: (context, index) => const Divider(
-            color: Colors.grey,
-            height: 0.1,
-          ),
-          itemBuilder: (context, index) => Container(
-            padding: const EdgeInsets.all(8),
-            width: MediaQuery.of(context).size.width,
-            height: 110,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'repository name',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                ),
-                Text(
-                  'repository intro',
-                  style: TextStyle(
-                      color: Colors.grey[800],
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17),
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.star_rounded,
-                      color: Colors.amber,
-                    ),
-                    const SizedBox(width: 5),
-                    Text(
-                      '0',
-                      style: TextStyle(
-                        color: Colors.grey[700],
-                        fontSize: 17,
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    const Icon(
-                      size: 14,
-                      Icons.circle_rounded,
-                      color: Colors.amber,
-                    ),
-                    const SizedBox(width: 5),
-                    Text(
-                      'dart',
-                      style: TextStyle(
-                        color: Colors.grey[700],
-                        fontSize: 17,
-                      ),
-                    )
-                  ],
-                )
-              ],
+        body: Column(
+          children: [
+            Container(
+              height: 1,
+              color: Colors.grey.withOpacity(0.5),
             ),
-          ),
+            Expanded(
+              child: Obx(
+                () {
+                  if (userData.userRepos.isEmpty) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  return ListView.separated(
+                    itemCount: userData.userRepos.length,
+                    separatorBuilder: (context, index) => const Divider(
+                      color: Colors.grey,
+                      height: 0.1,
+                    ),
+                    itemBuilder: (context, index) {
+                      final repo = userData.userRepos[index];
+                      final String name = repo['name'] ?? 'No name';
+                      final String description = repo['description'] ?? '';
+                      final int stargazersCount = repo['stargazersCount'] ?? 0;
+                      final String language = repo['language'] ?? '';
+                      final bool private = repo['private'] ?? false;
+                      return Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 16),
+                        width: MediaQuery.of(context).size.width,
+                        // height: 110,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              name,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20),
+                            ),
+                            description.isEmpty
+                                ? const SizedBox()
+                                : Text(
+                                    description,
+                                    maxLines: 3,
+                                    style: const TextStyle(fontSize: 17),
+                                  ),
+                            const SizedBox(height: 20),
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.star_rounded,
+                                  color: Colors.amber,
+                                ),
+                                const SizedBox(width: 5),
+                                Text(
+                                  stargazersCount.toString(),
+                                  style: TextStyle(
+                                    color: Colors.grey[700],
+                                    fontSize: 17,
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                language.isEmpty
+                                    ? const SizedBox()
+                                    : const Icon(
+                                        size: 14,
+                                        Icons.circle_rounded,
+                                        color: Colors.greenAccent,
+                                      ),
+                                language.isEmpty
+                                    ? const SizedBox()
+                                    : const SizedBox(width: 5),
+                                language.isEmpty
+                                    ? const SizedBox()
+                                    : Text(
+                                        language,
+                                        style: TextStyle(
+                                          color: Colors.grey[700],
+                                          fontSize: 17,
+                                        ),
+                                      )
+                              ],
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
