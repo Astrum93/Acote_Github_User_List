@@ -20,4 +20,19 @@ class GithubApiService {
       }
     }
   }
+
+  /// 유저 레포지토리 정보를 불러 오는 메서드
+  static Future getUserRepos(String url) async {
+    final dio = Dio();
+
+    try {
+      final response = await dio.get(url);
+
+      return response;
+    } on DioException catch (e) {
+      if (e.type == DioExceptionType.badResponse) {
+        debugPrint("404 에러@@@ \n${e.response?.statusCode.toString()}");
+      }
+    }
+  }
 }
