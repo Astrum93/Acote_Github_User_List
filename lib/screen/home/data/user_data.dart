@@ -10,6 +10,7 @@ class UserData extends GetxController with UserDataProvider {
   final ScrollController scrollController = ScrollController();
   RxString since = ''.obs;
   RxList userInfos = [].obs;
+  RxList userRepos = [].obs;
 
   @override
   void onInit() {
@@ -61,5 +62,26 @@ class UserData extends GetxController with UserDataProvider {
       userInfos.add(userInfo);
     }
     return userInfos;
+  }
+
+  Future getUserReposData(url) async {
+    final response = await GithubApiService.getUserRepos(url);
+    List repos = response.data;
+    for (var repo in repos) {
+      final String name = repo['name'];
+      final String? description = repo['description'];
+      final int? stargazersCount = repo['stargazers_count'];
+      final String? language = repo['language'];
+      final bool private = repo['private'];
+      Map<String, dynamic> userRepoData = {
+        'name': name,
+        'description': description,
+        'stargazersCount': stargazersCount,
+        'language': language,
+        'private': private,
+      };
+      userRepos.add(userRepoData);
+    }
+    return userRepos;
   }
 }
