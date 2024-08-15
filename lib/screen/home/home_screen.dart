@@ -4,6 +4,8 @@ import 'package:acote_github_user_list_app/screen/home/widget/user_profile_widge
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../detail/detail_screen.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -57,9 +59,20 @@ class _HomeScreenState extends State<HomeScreen> with UserDataProvider {
                   final String userId = userData.userInfos[index]['userId'];
                   final String userAvatarUrl =
                       userData.userInfos[index]['userAvatarUrl'];
-                  return UserProfile(
-                    userId: userId,
-                    userAvatarUrl: userAvatarUrl,
+                  final String userRepoUrl =
+                      userData.userInfos[index]['reposUrl'];
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => DetailScreen(
+                                userRepoUrl: userRepoUrl,
+                                userName: userId,
+                              )));
+                    },
+                    child: UserProfile(
+                      userId: userId,
+                      userAvatarUrl: userAvatarUrl,
+                    ),
                   );
                 },
               );
