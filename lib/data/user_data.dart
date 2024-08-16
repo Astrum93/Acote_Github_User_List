@@ -8,6 +8,7 @@ abstract mixin class UserDataProvider {
 
 class UserData extends GetxController with UserDataProvider {
   final ScrollController userInfoScrollController = ScrollController();
+  final ScrollController repoInfoScrollController = ScrollController();
   RxString since = ''.obs;
   RxList userInfos = [].obs;
   RxList userRepos = [].obs;

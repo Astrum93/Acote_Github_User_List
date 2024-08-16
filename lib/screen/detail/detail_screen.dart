@@ -1,5 +1,5 @@
+import 'package:acote_github_user_list_app/data/user_data.dart';
 import 'package:acote_github_user_list_app/screen/detail/widget/repo_profile_widget.dart';
-import 'package:acote_github_user_list_app/screen/home/data/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -73,6 +73,7 @@ class _DetailScreenState extends State<DetailScreen> with UserDataProvider {
                     return const Center(child: CircularProgressIndicator());
                   }
                   return ListView.separated(
+                    controller: userData.repoInfoScrollController,
                     itemCount: userData.userRepos.length,
                     separatorBuilder: (context, index) => const Divider(
                       color: Colors.grey,

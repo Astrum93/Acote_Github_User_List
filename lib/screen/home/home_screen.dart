@@ -1,4 +1,4 @@
-import 'package:acote_github_user_list_app/screen/home/data/user_data.dart';
+import 'package:acote_github_user_list_app/data/user_data.dart';
 import 'package:acote_github_user_list_app/screen/home/widget/ad_banner_widget.dart';
 import 'package:acote_github_user_list_app/screen/home/widget/user_profile_widget.dart';
 import 'package:flutter/material.dart';
