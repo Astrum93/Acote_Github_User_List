@@ -7,7 +7,7 @@ abstract mixin class UserDataProvider {
 }
 
 class UserData extends GetxController with UserDataProvider {
-  final ScrollController scrollController = ScrollController();
+  final ScrollController userInfoScrollController = ScrollController();
   RxString since = ''.obs;
   RxList userInfos = [].obs;
   RxList userRepos = [].obs;
@@ -15,14 +15,14 @@ class UserData extends GetxController with UserDataProvider {
   @override
   void onInit() {
     super.onInit();
-    _load();
+    _userInfoLoad();
   }
 
-  void _load() {
-    scrollController.addListener(
+  void _userInfoLoad() {
+    userInfoScrollController.addListener(
       () {
-        if (scrollController.position.pixels ==
-            scrollController.position.maxScrollExtent) {
+        if (userInfoScrollController.position.pixels ==
+            userInfoScrollController.position.maxScrollExtent) {
           getUserInfosData();
         }
       },

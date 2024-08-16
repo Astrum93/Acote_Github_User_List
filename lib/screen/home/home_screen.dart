@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> with UserDataProvider {
               }
 
               return ListView.separated(
-                controller: userData.scrollController,
+                controller: userData.userInfoScrollController,
                 itemCount: userData.userInfos.length,
                 separatorBuilder: (context, index) => const Divider(
                   color: Colors.grey,
