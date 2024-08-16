@@ -9,7 +9,9 @@ abstract mixin class UserDataProvider {
 class UserData extends GetxController with UserDataProvider {
   final ScrollController userInfoScrollController = ScrollController();
   final ScrollController repoInfoScrollController = ScrollController();
+
   RxString since = ''.obs;
+  RxString nextRepoUrl = ''.obs;
   RxList userInfos = [].obs;
   RxList userRepos = [].obs;
 
@@ -17,6 +19,7 @@ class UserData extends GetxController with UserDataProvider {
   void onInit() {
     super.onInit();
     _userInfoLoad();
+    _repoInfoLoad();
   }
 
   void _userInfoLoad() {
@@ -25,6 +28,17 @@ class UserData extends GetxController with UserDataProvider {
         if (userInfoScrollController.position.pixels ==
             userInfoScrollController.position.maxScrollExtent) {
           getUserInfosData();
+        }
+      },
+    );
+  }
+
+  void _repoInfoLoad() {
+    repoInfoScrollController.addListener(
+      () {
+        if (repoInfoScrollController.position.pixels ==
+            repoInfoScrollController.position.maxScrollExtent) {
+          getUserReposData(nextRepoUrl.value);
         }
       },
     );
@@ -67,6 +81,25 @@ class UserData extends GetxController with UserDataProvider {
 
   Future getUserReposData(url) async {
     final response = await GithubApiService.getUserRepos(url);
+
+    if (response != null) {
+      var linkHeader = response.headers['Link']?[0].toString();
+      if (linkHeader != null && linkHeader.contains('rel="next"')) {
+        /// < 와 >; rel="next" 사이의 문자열 (다음 페이지 url)을 추출
+        RegExp regExp = RegExp(r'<([^>]+)>;\s*rel="next"');
+        Match? match = regExp.firstMatch(linkHeader);
+        if (match != null) {
+          nextRepoUrl.value = match.group(1) ?? '';
+          debugPrint(nextRepoUrl.value);
+        }
+      } else {
+        nextRepoUrl.value = '';
+      }
+    } else {
+      /// next url이 없어 response가 할당이 안될 경우
+      return;
+    }
+
     List repos = response.data;
     for (var repo in repos) {
       final String name = repo['name'];
