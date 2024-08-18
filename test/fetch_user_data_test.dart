@@ -37,7 +37,7 @@ void main() {
     });
 
     /// User Repos Data Fetch Test
-    test('Fetch Github User Repos Data Fetch', () async {
+    test('Github User Repos Data Fetch', () async {
       final mockRepoData = [
         {
           'name': 'repo1',
