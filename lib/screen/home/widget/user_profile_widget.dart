@@ -20,17 +20,26 @@ class UserProfile extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           /// 프로필 사진
-          CircleAvatar(
-            radius: 50,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(50),
-              child: Image.network(
-                userAvatarUrl,
-                fit: BoxFit.fill,
-                alignment: Alignment.center,
-              ),
-            ),
-          ),
+          userAvatarUrl.isEmpty
+              ? const Center(child: CircularProgressIndicator())
+              : CircleAvatar(
+                  radius: 50,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
+                    child: Image.network(
+                      userAvatarUrl,
+                      fit: BoxFit.fill,
+                      alignment: Alignment.center,
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Icon(
+                          Icons.image_not_supported_outlined,
+                          size: 50,
+                          color: Colors.red,
+                        );
+                      },
+                    ),
+                  ),
+                ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.end,
