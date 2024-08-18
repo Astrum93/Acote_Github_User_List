@@ -11,23 +11,25 @@ class AdBanner extends StatefulWidget {
 }
 
 class _AdBannerState extends State<AdBanner> {
+  String url = 'https://placehold.it/500x100?text=ad';
+  String adUrl = 'https://taxrefundgo.kr';
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        launchUrl(Uri.parse('https://taxrefundgo.kr'));
+        launchUrl(Uri.parse(adUrl));
       },
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        height: 100,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: NetworkImage(
-              'https://placehold.it/500x100?text=ad',
-            ),
-            fit: BoxFit.fitHeight,
-          ),
-        ),
+      child: Image.network(
+        url,
+        fit: BoxFit.fitHeight,
+        errorBuilder: (context, error, stackTrace) {
+          return const Icon(
+            Icons.image_not_supported_outlined,
+            size: 50,
+            color: Colors.red,
+          );
+        },
       ),
     );
   }
