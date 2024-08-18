@@ -75,10 +75,12 @@ class _HomeScreenState extends State<HomeScreen> with UserDataProvider {
                                 userName: userId,
                               )));
                     },
-                    child: UserProfile(
-                      userId: userId,
-                      userAvatarUrl: userAvatarUrl,
-                    ),
+                    child: userData.userInfos[index] == null
+                        ? const Center(child: CircularProgressIndicator())
+                        : UserProfile(
+                            userId: userId,
+                            userAvatarUrl: userAvatarUrl,
+                          ),
                   );
                 },
               );
