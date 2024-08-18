@@ -37,18 +37,14 @@ GetX는 고성능 상태 관리, 스마트한 의존성 주입, 그리고 경로
 
 ### Test(/test)
 ```
-dependencies:
-  # api
-  dio: ^5.5.0+1
-  # state manage
-  get: ^4.6.6
-  # widget
-  url_launcher: ^6.3.0
+FetchApi Test
+  - Github User Data Fetch
+  - Github User Repos Data Fetch
 
-dev_dependencies:
-  # test
-  mockito: ^5.4.4
-  build_runner: ^2.4.11
+Widget Test
+  - HomeScreen Widget Test
+  - AdBanner Widget Test
+
 ```
 
 <br>
