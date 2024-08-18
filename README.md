@@ -26,12 +26,12 @@ GetX는 고성능 상태 관리, 스마트한 의존성 주입, 그리고 경로
 
 <br>
 
+---
+
 ### Docs
 
 
-
----
-<br>
+<img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=notion&logoColor=white" /> [acote_github_user_list_app Docs](https://astrum93.notion.site/acote_github_user_list_app-Docs-e147cd3a58904ca5938410da0e62337a?pvs=4)
 
 ---
 
