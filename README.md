@@ -1,6 +1,5 @@
-# acote_github_user_list_app
+# github_user_list_app
 
-[Acote] Flutter Engineer 과제
 - Github Api를 활용하여 사용자 목록과 사용자의 레포지토리 목록 가져오는 앱 만들기
 
 <br>
@@ -28,12 +27,7 @@ GetX는 고성능 상태 관리, 스마트한 의존성 주입, 그리고 경로
 
 ---
 
-### Docs
-
-
-<img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=notion&logoColor=white" /> [acote_github_user_list_app Docs](https://astrum93.notion.site/acote_github_user_list_app-Docs-e147cd3a58904ca5938410da0e62337a?pvs=4)
-
----
+<br>
 
 ### Test(/test)
 ```
